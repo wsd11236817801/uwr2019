@@ -46,7 +46,7 @@ public class TestTemplateProcessor implements DataSourceType{
 		assertEquals("变量testexpr的表达式解析错误","${num}+${readme}",dh3.getExpr());
 		dh3.fillValue();
 		assertEquals("变量testexpr","5.0",dh3.getValue());
-
+		
 		//检测SUT的实际行为模式是否符合预期
 		PowerMock.verifyAll();
 	}
@@ -65,6 +65,13 @@ public class TestTemplateProcessor implements DataSourceType{
         //------------------------------------------------
         //以上流程请在这里实现：
         //
+		dsc=EasyMock.createMock(DataSourceConfig.class);
+		EasyMock.expect(dsc.getConstDataSource().getDataHolder("sex").getValue()).andReturn("Female");
+		EasyMock.expect(dsc.getConstDataSource().getDataHolder("readme").getValue()).andReturn("5");
+		EasyMock.expect(dsc.getConstDataSource().getDataHolder("testexpr").getValue()).andReturn("5.0");
+		EasyMock.expect(dsc.getConstDataSource().getDataHolder("testexpr").getExpr()).andReturn("${num}+${readme}");
+		PowerMock.mockStatic(DataSourceConfig.class);
+		EasyMock.expect(DataSourceConfig.newInstance()).andReturn(dsc);
         //
         // 这里写代码
         //
