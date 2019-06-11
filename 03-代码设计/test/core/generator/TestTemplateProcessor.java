@@ -1,4 +1,4 @@
-package core.generator;
+﻿package core.generator;
 import core.common.*;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
@@ -46,7 +46,7 @@ public class TestTemplateProcessor implements DataSourceType{
 		assertEquals("变量testexpr的表达式解析错误","${num}+${readme}",dh3.getExpr());
 		dh3.fillValue();
 		assertEquals("变量testexpr","5.0",dh3.getValue());
-		
+
 		//检测SUT的实际行为模式是否符合预期
 		PowerMock.verifyAll();
 	}
@@ -63,18 +63,20 @@ public class TestTemplateProcessor implements DataSourceType{
 		//3. 使用PowerMock建立DataSourceConfig类的静态Mock；
 		//4. 录制该静态Mock的行为模式（针对的是静态方法）；
         //------------------------------------------------
-        //以上流程请在这里实现：
-        //
-		dsc=EasyMock.createMock(DataSourceConfig.class);
-		EasyMock.expect(dsc.getConstDataSource().getDataHolder("sex").getValue()).andReturn("Female");
-		EasyMock.expect(dsc.getConstDataSource().getDataHolder("readme").getValue()).andReturn("5");
-		EasyMock.expect(dsc.getConstDataSource().getDataHolder("testexpr").getValue()).andReturn("5.0");
-		EasyMock.expect(dsc.getConstDataSource().getDataHolder("testexpr").getExpr()).andReturn("${num}+${readme}");
+		dsc = EasyMock.createMock(DataSourceConfig.class);
+		EasyMock.expect(des.getConstDataSource()).andReturn(new DataSource());
+		EasyMock.expect(des.getConstDataSource().getValue()).andReturn(new List<DataHolder>());
+		EasyMock.expect(des.getConstDataSource().getDataHolder("sex")).andReturn(new DataHandler());
+		EasyMock.expect(des.getConstDataSource().getDataHolder("sex").getValue()).andReturn("Female");
+		EasyMock.expect(des.getConstDataSource().getDataHolder("readme")).andReturn(new DataHandler());
+		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").getValue()).andReturn("5");
+		EasyMock.expect(des.getConstDataSource().getDataHolder("testexpr")).andReturn(new DataHandler());
+		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").getExpr()).andReturn({"num":5,"readme":5));
+		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").fillValue()).andReturn(null);
+		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").getValue()).andReturn("5.0");
 		PowerMock.mockStatic(DataSourceConfig.class);
-		EasyMock.expect(DataSourceConfig.newInstance()).andReturn(dsc);
-        //
-        // 这里写代码
-        //
+		EasyMock.expect(DataSourceConfig.newInstance()).andReturn(des).anyTime();
+
         //------------------------------------------------
 		//5. 重放所有的行为。
 		PowerMock.replayAll(dsc);
