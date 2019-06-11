@@ -64,23 +64,56 @@ public class TestTemplateProcessor implements DataSourceType{
 		//4. 录制该静态Mock的行为模式（针对的是静态方法）；
         //------------------------------------------------
 		dsc = EasyMock.createMock(DataSourceConfig.class);
-		EasyMock.expect(des.getConstDataSource()).andReturn(new DataSource());
-		EasyMock.expect(des.getConstDataSource().getValue()).andReturn(new List<DataHolder>());
-		EasyMock.expect(des.getConstDataSource().getDataHolder("sex")).andReturn(new DataHandler());
-		EasyMock.expect(des.getConstDataSource().getDataHolder("sex").getValue()).andReturn("Female");
-		EasyMock.expect(des.getConstDataSource().getDataHolder("readme")).andReturn(new DataHandler());
-		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").getValue()).andReturn("5");
-		EasyMock.expect(des.getConstDataSource().getDataHolder("testexpr")).andReturn(new DataHandler());
-		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").getExpr()).andReturn({"num":5,"readme":5));
-		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").fillValue()).andReturn(null);
-		EasyMock.expect(des.getConstDataSource().getDataHolder("readme").getValue()).andReturn("5.0");
-		PowerMock.mockStatic(DataSourceConfig.class);
-		EasyMock.expect(DataSourceConfig.newInstance()).andReturn(des).anyTime();
 
-        //------------------------------------------------
+		ConstDataSource ds= EasyMock.createMock(ConstDataSource.class);
+		EasyMock.expect(dsc.getConstDataSource()).andReturn(ds).anyTimes();
+
+
+
+		DataHolder dh1 =EasyMock.createMock(DataHolder.class);
+		DataHolder dh2 =EasyMock.createMock(DataHolder.class);
+		DataHolder dh3 =EasyMock.createMock(DataHolder.class);
+
+		dh1.setName("sex");
+		EasyMock.expectLastCall().andAnswer(new
+													IAnswer<DataHolder>() {
+														@Override
+														public DataHolder answer() throws Throwable {
+															String varname =
+																	(String) EasyMock.getCurrentArguments()[0];
+															return ds.getDataHolder(varname);
+														}
+													});
+
+		EasyMock.expect(ds.getDataHolder("sex")).andReturn(dh1);
+		EasyMock.expect(dh1.getValue()).andReturn("Female");
+
+		EasyMock.expect(dh2.getValue()).andReturn("5");
+		EasyMock.expect(ds.getDataHolder("readme")).andReturn(dh2);
+
+
+		EasyMock.expect(dh3.getExpr()).andReturn("${num}+${readme}");
+		EasyMock.expect(dh3.fillValue()).andReturn("5.0");
+		EasyMock.expect(dh3.getValue()).andReturn("5.0");
+		EasyMock.expect(ds.getDataHolder("testexpr")).andReturn(dh3);
+
+		List<DataHolder> dhs=null;
+		dhs.add(dh1);
+		dhs.add(dh2);
+		dhs.add(dh3);
+		EasyMock.expect(ds.getVars()).andReturn(dhs);
+
+
+		PowerMock.mockStatic(DataSourceConfig.class);
+		EasyMock.expect(DataSourceConfig.newInstance()).andReturn(dsc).anyTimes();
+
+		// 这里写代码
+		//
+		//------------------------------------------------
 		//5. 重放所有的行为。
 		PowerMock.replayAll(dsc);
 		//初始化一个待测试类（SUT）的实例
 		tp = new TemplateProcessor();
+
 	}
 }

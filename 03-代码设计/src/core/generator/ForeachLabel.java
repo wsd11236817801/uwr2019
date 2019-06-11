@@ -20,149 +20,149 @@ import com.aspose.words.Table;
 /**
  * 统一Word报告生成系统（UWR）
  * <foreach>标签类
+ *
  * @author 张学龙
  * @author 朴勇 15641190702
- * 
  */
 public class ForeachLabel {
-	//变量名
-	private String varname = null;
-	//开始节点
-	private Node begin = null;
-	//结束节点
-	private Node end = null;
-	//父集合
-	private Node family = null;
-	//是否在表格中
-	private boolean inTable = false;
-	//原始开始节点
-	private Node obegin = null;
-	//原始结束节点
-	private Node oend = null;
-	//原始父集合节点
-	private Node ofamily = null;
-	//是否按列展开
-	private boolean isColumn = false;
-	//default value when no item
-	private String defaultvalue = "";
-	//separator1 and separator2
-	private String midsep = "";
-	private String endsep = "";
-	//paragraph: all the sibling nodes in between begin and end,
-	//table: first element is the row, others are cells contained.
-	private List<Node> nodelist = new ArrayList<Node>();
+    //变量名
+    private String varname = null;
+    //开始节点
+    private Node begin = null;
+    //结束节点
+    private Node end = null;
+    //父集合
+    private Node family = null;
+    //是否在表格中
+    private boolean inTable = false;
+    //原始开始节点
+    private Node obegin = null;
+    //原始结束节点
+    private Node oend = null;
+    //原始父集合节点
+    private Node ofamily = null;
+    //是否按列展开
+    private boolean isColumn = false;
+    //default value when no item
+    private String defaultvalue = "";
+    //separator1 and separator2
+    private String midsep = "";
+    private String endsep = "";
+    //paragraph: all the sibling nodes in between begin and end,
+    //table: first element is the row, others are cells contained.
+    private List<Node> nodelist = new ArrayList<Node>();
 
-	public String getMidsep() {
-		return midsep;
-	}
+    public String getMidsep() {
+        return midsep;
+    }
 
-	public void setMidsep(String midsep) {
-		this.midsep = midsep;
-	}
+    public void setMidsep(String midsep) {
+        this.midsep = midsep;
+    }
 
-	public String getEndsep() {
-		return endsep;
-	}
+    public String getEndsep() {
+        return endsep;
+    }
 
-	public void setEndsep(String endsep) {
-		this.endsep = endsep;
-	}
+    public void setEndsep(String endsep) {
+        this.endsep = endsep;
+    }
 
-	//是否在其中
-	public boolean isPart(Node node) {
-		boolean flag = false;
-		return flag;
-	}
-	
-	//节点正则化
-	public static CompositeNode<?> makeNormalNode(Node node){
-		return (CompositeNode<?>) node;
-	}
-	
-	//父集合节点正则化
-	public static CompositeNode<?> makeNormalFamily(Node f){	
-		return (CompositeNode<?>) f;
-	}
-	
-	//删除原始信息
-	public void removeOrigin() throws Exception {
-	}
-	
-	//获取范围
-	public List<Node> getNodesInRange(){
-		return nodelist;
-	}
-	
-	//获取中间所有节点
-	//顺序：reverse order
-	public void fillNodesInBetween() {
-	}
+    //是否在其中
+    public boolean isPart(Node node) {
+        boolean flag = false;
+        return flag;
+    }
 
-	public String getVarname() {
-		return varname;
-	}
+    //节点正则化
+    public static CompositeNode<?> makeNormalNode(Node node) {
+        return (CompositeNode<?>) node;
+    }
 
-	public void setVarname(String varname) {
-		this.varname = varname;
-	}
-	
-	public String getDefaultValue() {
-		return this.defaultvalue;
-	}
+    //父集合节点正则化
+    public static CompositeNode<?> makeNormalFamily(Node f) {
+        return (CompositeNode<?>) f;
+    }
 
-	public void setDefaultValue(String dv) {
-	}
+    //删除原始信息
+    public void removeOrigin() throws Exception {
+    }
 
-	public Node getBegin() {
-		return begin;
-	}
+    //获取范围
+    public List<Node> getNodesInRange() {
+        return nodelist;
+    }
 
-	public void setBegin(Node begin) {
-	}
+    //获取中间所有节点
+    //顺序：reverse order
+    public void fillNodesInBetween() {
+    }
 
-	public Node getEnd() {
-		return end;
-	}
+    public String getVarname() {
+        return varname;
+    }
 
-	public void setEnd(Node end) {
-	}
+    public void setVarname(String varname) {
+        this.varname = varname;
+    }
 
-	public CompositeNode<?> getFamily() {
-		return (CompositeNode<?>) family;
-	}
+    public String getDefaultValue() {
+        return this.defaultvalue;
+    }
 
-	public void setFamily(Node f) {
-	}
+    public void setDefaultValue(String dv) {
+    }
 
-	public boolean isInTable() {
-		return inTable;
-	}
+    public Node getBegin() {
+        return begin;
+    }
 
-	private void setInTable(boolean inTable) {
-		this.inTable = inTable;
-	}
+    public void setBegin(Node begin) {
+    }
 
-	//高维展开
-	public void expand(List<Node> inserted) throws Exception {
-	}
-	
-	//竖向展开
-	private void expandInVerticalTable(List<Node> inserted) throws Exception {
-	}
+    public Node getEnd() {
+        return end;
+    }
 
-	//段落展开
-	private void expandInParagraph(List<Node> inserted) throws Exception {
-	}
-	
-	//横向展开
-	private void expandInHorizontalTable(List<Node> inserted) throws Exception {
-	}
+    public void setEnd(Node end) {
+    }
 
-	public void setColumn(boolean b) {
-		isColumn = b;	
-	}
+    public CompositeNode<?> getFamily() {
+        return (CompositeNode<?>) family;
+    }
 
-	//使用默认值展开
-	public void expandWithDefaultValue() throws Exception {
-	}
+    public void setFamily(Node f) {
+    }
+
+    public boolean isInTable() {
+        return inTable;
+    }
+
+    private void setInTable(boolean inTable) {
+        this.inTable = inTable;
+    }
+
+    //高维展开
+    public void expand(List<Node> inserted) throws Exception {
+    }
+
+    //竖向展开
+    private void expandInVerticalTable(List<Node> inserted) throws Exception {
+    }
+
+    //段落展开
+    private void expandInParagraph(List<Node> inserted) throws Exception {
+    }
+
+    //横向展开
+    private void expandInHorizontalTable(List<Node> inserted) throws Exception {
+    }
+
+    public void setColumn(boolean b) {
+        isColumn = b;
+    }
+
+    //使用默认值展开
+    public void expandWithDefaultValue() throws Exception {
+    }
 }
